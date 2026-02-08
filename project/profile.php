@@ -1,11 +1,9 @@
 <?php
-    session_start();
+    include("vendor/autoload.php");
 
-    $login = isset($_SESSION['user']);
-    if(!$login) {
-        header("location: index.php");
-        exit();
-    }
+    use Helpers\Auth;
+
+    $auth = Auth::check();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,12 +16,24 @@
 <body>
     <div class="container" style="max-width: 800px">
         <h1 class="my-4">Profile</h1>
+
+        <?php if($auth->photo): ?>
+            <img src="_actions/photos/<?= $auth->photo ?>" alt="" class="img-thumbnail" width="300">
+        <?php endif ?>
+
+        <form action="_actions/upload.php" class="input-group my-4"
+            method="post" enctype="multipart/form-data">
+            <input type="file" name="photo" class="form-control">
+            <button class="btn btn-secondary">Upload</button>
+        </form>
+
         <ul class="list-group mb-3">
-            <li class="list-group-item">Name: Alice</li>
-            <li class="list-group-item">Email: alice@gmail.com</li>
-            <li class="list-group-item">Phone: 38294822</li>
-            <li class="list-group-item">Address: Some Address</li>
+            <li class="list-group-item">Name: <?= $auth->name ?></li>
+            <li class="list-group-item">Email: <?= $auth->email ?></li>
+            <li class="list-group-item">Phone: <?= $auth->phone ?></li>
+            <li class="list-group-item">Address: <?= $auth->address ?></li>
         </ul>
+        <a href="admin.php">Admin</a> |
         <a href="_actions/logout.php" class="text-danger">Logout</a>
     </div>
 </body>
