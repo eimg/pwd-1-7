@@ -6,6 +6,7 @@
             <div class="card-body">
                 <h3 class="card-title">{{ $article->title }}</h3>
                 <div class="text-muted">
+                    Category: {{ $article->category->name }},
                     {{ $article->created_at }}
                 </div>
                 <p>
@@ -14,5 +15,19 @@
                 <a href="{{ url("/articles/delete/$article->id") }}" class="btn btn-sm btn-outline-danger">Delete</a>
             </div>
         </div>
+
+        <ul class="list-group mt-4">
+            <li class="list-group-item active">
+                Comments ({{ count( $article->comments ) }})
+            </li>
+            @foreach ($article->comments as $comment)
+                <li class="list-group-item">
+                    <a href="{{ url("/comments/delete/$comment->id") }}"
+                        class="btn-close float-end"></a>
+
+                    {{ $comment->content }}
+                </li>
+            @endforeach
+        </ul>
     </div>
 @endsection
