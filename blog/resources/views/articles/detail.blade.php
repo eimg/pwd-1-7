@@ -2,10 +2,18 @@
 
 @section("content")
     <div class="container" style="max-width: 600px">
+
+        @if(session("info"))
+            <div class="alert alert-info">
+                {{ session("info") }}
+            </div>
+        @endif
+
         <div class="card mb-2 bg-white border-primary">
             <div class="card-body">
                 <h3 class="card-title">{{ $article->title }}</h3>
                 <div class="text-muted">
+                    <b class="text-success">{{ $article->user->name }}</b>,
                     Category: {{ $article->category->name }},
                     {{ $article->created_at }}
                 </div>
@@ -30,7 +38,8 @@
                         <a href="{{ url("/comments/delete/$comment->id") }}"
                             class="btn-close float-end"></a>
                     @endauth
-
+                    
+                    <b class="text-success">{{ $comment->user->name }}</b> -
                     {{ $comment->content }}
                 </li>
             @endforeach
