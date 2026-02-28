@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
 
         $list = ['News', 'Tech', 'App', 'Mobile', 'Api'];
         foreach($list as $name) {
-            \App\Models\Category::create(['name' => $name]);
+            \App\Models\Category::create([ 'name' => $name ]);
         }
     }
 }

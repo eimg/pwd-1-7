@@ -7,6 +7,11 @@ use App\Models\Article;
 
 class ArticleController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware("auth")->except(['index', 'detail']);
+    }
+
     public function index()
     {
         $data = Article::latest()->paginate(5);
@@ -56,6 +61,6 @@ class ArticleController extends Controller
         $article = Article::find($id);
         $article->delete();
 
-        return redirect("/articles")->with("info", "Deleted an article");
+        return redirect("/articles")->with("info", "An article is deleted");
     }
 }
