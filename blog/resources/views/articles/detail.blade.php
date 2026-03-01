@@ -20,10 +20,12 @@
                 <p>{{ $article->body }}</p>
                 
                 @auth
-                    <a href="{{ url("/articles/delete/$article->id") }}"
-                        class="btn btn-sm btn-outline-danger">
-                        Delete
-                    </a>
+                    @can("delete-article", $article)
+                        <a href="{{ url("/articles/delete/$article->id") }}"
+                            class="btn btn-sm btn-outline-danger">
+                            Delete
+                        </a>
+                    @endcan
                 @endauth
             </div>
         </div>
@@ -35,8 +37,10 @@
             @foreach($article->comments as $comment)
                 <li class="list-group-item">
                     @auth
-                        <a href="{{ url("/comments/delete/$comment->id") }}"
-                            class="btn-close float-end"></a>
+                        @can("delete-comment", $comment)
+                            <a href="{{ url("/comments/delete/$comment->id") }}"
+                                class="btn-close float-end"></a>
+                        @endcan
                     @endauth
                     
                     <b class="text-success">{{ $comment->user->name }}</b> -
